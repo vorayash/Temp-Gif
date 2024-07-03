@@ -1,5 +1,7 @@
 /*
 lli limit=90000000
+65 - A
+97 - a
 1. array
         array<int,6> a={1,2,3};
 
@@ -36,6 +38,10 @@ lli limit=90000000
 
         //for vector<vector<dtype,dtype>> e;
         for(auto& e: paths)  cout<<e[0]<<cout<<e[1];
+
+        //sort(vec.begin(), vec.end(), [](const pair<char, int> &a, const pair<char, int> &b){
+            return a.second > b.second;
+        });
 
 3.deque
         deque <int> gquiz;
@@ -75,10 +81,14 @@ lli limit=90000000
         map.erase(iterator pointing to element)
 
 
-5.string
+5.string        
         s[i] returns char from string
 
+        string(size, char) - char to string
+
         string(rbegin(w), rend(w)): reverse string
+
+        string.pop_back() - remove last character
 
         s.erase(s.begin()+i , s.end());
         // Deletes 4 characters from index number 1
@@ -182,9 +192,17 @@ Deletion time   | log(n) + Rebalance  | Same as search
         val.insert(value)  log(n)
         set<int, greater<int> > s1; : to store values in descending order
 
+        auto firstElement = mySet.begin(); //First element of set
+        cout << "First element: " << *firstElement << endl; 
+
         set.count(value) //returns 1 if value present else returns zero-           O(logn)
         uordered_set.count(value) // returns 1 if value present else returns zero- O(1)
         multiset_count(value) //returns number of occurece of value -              O(K + log(N))
+
+multiset
+        multiset<int> st;
+        st.erase(st.find(number)); - remove one occurence
+        st.erase(number); - remove all occurence
 
 7.upper_bound and lower_bound
         for sorted vector: lower_bound - O(logn) otherwise O(n)
@@ -195,26 +213,33 @@ Deletion time   | log(n) + Rebalance  | Same as search
 
 
 8. Priority queue
+        insertion() - log(n)
         //to store second number minimum, if second number is same than compare first number
-        auto cmp = [](pair<int, int> a, pair<int, int> b)
-        {
-                if (a.second == b.second)
+        class Compare{
+        public:
+                bool operator()(pair<int, int> a, pair<int, int> b)
                 {
-                return a.first > b.first;
-                }
-                else
-                {
-                return a.second > b.second;
+                return a.second < b.second;
                 }
         };
-        priority_queue<pair<int,int>,vector<pair<int,int>>,decltype(cmp)> Q(cmp);
+        sorted by higher to lower on second elem
+        priority_queue<pair<int,int>,vector<pair<int,int>>,Compare>;
 
 
+10. Multimap
+        it allows multiple values with same key
+        auto range = Multimap.equal_range(key_to_find) :  it returns a pair of iterators.
+        range.first = The first member of the pair points to the beginning of the range
+        range.second = second member points just past the end of the range.
 
 
-
-
-
+11. struct
+        struct TreeNode{
+                int value;
+                TreeNode* left;
+                TreeNode* right;
+                TreeNode(int val) : value(val), left(nullptr), right(nullptr){};
+        };
 
 Number of Good Pairs:
 ---------------------------------------
@@ -235,11 +260,23 @@ vector<int> A{1,2,3,1,1,3};
 1 & AnyOddNumber = 1
 0 & AnyEvenNumber = 0
 
+-----------XOR operator-----------
+a ^ 0 = a
+a ^ a = 0
+0 ^ 1 = 1
+1 ^ 0 = 1
+1 ^ 1 = 0
+0 ^ 0 = 0
 
 
+n & - n = find rightmost set bit
+
+bitset<32>(num) - print decimal in binary representation 
 
 
-
+// negative reminder
+-2 % 6 = -2
+(-2 + 6) % 6 = 4
 
 
 
@@ -272,3 +309,37 @@ int main(int argc, char const *argv[])
 // 		res.push_back(n);
 // 	}
 // }
+
+
+
+// algorithm
+
+// Union find algorithm
+
+int findParent(int node)
+{
+return (parent[node] == node) ? node : parent[node] = findParent(parent[node]);
+}
+
+void makeSameGroup(int a, int b)
+{
+int au = findParent(a);
+int bu = findParent(b);
+
+parent[au] = bu;
+}
+
+
+// Dutch National Flag algorithm, The Dutch National Flag algorithm, also known as 3-way partitioning, is an algorithm for sorting an array containing three distinct values.
+https://leetcode.com/problems/sort-colors/description/?envType=daily-question&envId=2024-07-03
+
+int mid = 0;
+        int low = 0;
+        int high = nums.size() - 1;
+
+        while(mid <= high)
+        {
+            if(nums[mid] == 0) swap(nums[low++], nums[mid++]);
+            else if(nums[mid] == 2) swap(nums[mid], nums[high--]);
+            else mid++;
+        }
