@@ -2,6 +2,8 @@
 lli limit=90000000
 65 - A
 97 - a
+
+The total number of subarrays in an array of size \(N\) is \(N*(N+1)/2\)
 1. array
         array<int,6> a={1,2,3};
 
@@ -81,8 +83,10 @@ lli limit=90000000
         map.erase(iterator pointing to element)
 
 
-5.string        
+5.string
         s[i] returns char from string
+
+        to_string()
 
         string(size, char) - char to string
 
@@ -193,7 +197,7 @@ Deletion time   | log(n) + Rebalance  | Same as search
         set<int, greater<int> > s1; : to store values in descending order
 
         auto firstElement = mySet.begin(); //First element of set
-        cout << "First element: " << *firstElement << endl; 
+        cout << "First element: " << *firstElement << endl;
 
         set.count(value) //returns 1 if value present else returns zero-           O(logn)
         uordered_set.count(value) // returns 1 if value present else returns zero- O(1)
@@ -241,6 +245,13 @@ multiset
                 TreeNode(int val) : value(val), left(nullptr), right(nullptr){};
         };
 
+12. tupple
+        tuple <char, int, float> geek;
+        geek = make_tuple('a', 10, 15.5);
+        geek = {'a', 10, 15.5}
+         get<0>(geek), get<1>(geek), get<2>(geek)
+         auto[first, second, third] = geek;
+
 Number of Good Pairs:
 ---------------------------------------
 vector<int> A{1,2,3,1,1,3};
@@ -271,7 +282,7 @@ a ^ a = 0
 
 n & - n = find rightmost set bit
 
-bitset<32>(num) - print decimal in binary representation 
+bitset<32>(num) - print decimal in binary representation
 
 
 // negative reminder
@@ -310,80 +321,191 @@ int main(int argc, char const *argv[])
 // 	}
 // }
 
-
-
 // algorithm
 
 // Union find algorithm
 
 int findParent(int node)
 {
-return (parent[node] == node) ? node : parent[node] = findParent(parent[node]);
+        return (parent[node] == node) ? node : parent[node] = findParent(parent[node]);
 }
 
 void makeSameGroup(int a, int b)
 {
-int au = findParent(a);
-int bu = findParent(b);
+        int au = findParent(a);
+        int bu = findParent(b);
 
-parent[au] = bu;
+        parent[au] = bu;
 }
 
-
 // Dutch National Flag algorithm, The Dutch National Flag algorithm, also known as 3-way partitioning, is an algorithm for sorting an array containing three distinct values.
-https://leetcode.com/problems/sort-colors/description/?envType=daily-question&envId=2024-07-03
+https : // leetcode.com/problems/sort-colors/description/?envType=daily-question&envId=2024-07-03
 
-int mid = 0;
-        int low = 0;
-        int high = nums.size() - 1;
+        int mid = 0;
+int low = 0;
+int high = nums.size() - 1;
 
-        while(mid <= high)
-        {
-            if(nums[mid] == 0) swap(nums[low++], nums[mid++]);
-            else if(nums[mid] == 2) swap(nums[mid], nums[high--]);
-            else mid++;
-        }
-
+while (mid <= high)
+{
+        if (nums[mid] == 0)
+                swap(nums[low++], nums[mid++]);
+        else if (nums[mid] == 2)
+                swap(nums[mid], nums[high--]);
+        else
+                mid++;
+}
 
 // Find lowest common ancestor in binary tree
 
-TreeNode* lca(TreeNode* root, int s, int d)
-    {
-        if(root == nullptr) return nullptr;
+TreeNode *lca(TreeNode *root, int s, int d)
+{
+        if (root == nullptr)
+                return nullptr;
 
-        if(root->val == s || root->val == d) return root;
+        if (root->val == s || root->val == d)
+                return root;
 
-        TreeNode* left = lca(root->left, s, d);
-        TreeNode* right = lca(root->right, s, d);
+        TreeNode *left = lca(root->left, s, d);
+        TreeNode *right = lca(root->right, s, d);
 
-        if(left && right) return root;
+        if (left && right)
+                return root;
 
         return (left) ? left : right;
-    }
-
-
+}
 
 // Merge sort (nlogn)
 
-void outPlaceMerge(vector<int> &nums, int low, int mid, int high) {
-        if (low >= high) return;
+void outPlaceMerge(vector<int> &nums, int low, int mid, int high)
+{
+        if (low >= high)
+                return;
         int l = low, r = mid + 1, k = 0, size = high - low + 1;
         vector<int> sorted(size, 0);
         while (l <= mid and r <= high)
                 sorted[k++] = nums[l] < nums[r] ? nums[l++] : nums[r++];
-        while (l <= mid) 
+        while (l <= mid)
                 sorted[k++] = nums[l++];
-        while (r <= high) 
+        while (r <= high)
                 sorted[k++] = nums[r++];
         for (k = 0; k < size; k++)
-        nums[k + low] = sorted[k];
-        
+                nums[k + low] = sorted[k];
+}
+
+void mergeSort(vector<int> &nums, int low, int high)
+{
+        if (low >= high)
+                return;
+        int mid = (high - low) / 2 + low;
+        mergeSort(nums, low, mid);
+        mergeSort(nums, mid + 1, high);
+        outPlaceMerge(nums, low, mid, high);
+}
+
+//  Dijkstra’s Algorithm
+
+// Time Complexity	O((V + E) log V)
+// Space Complexity	O(V)
+
+// Floyd warshal algorithm 
+// Time Complexity	O(n^2)
+// Space Complexity	O(n^2)
+
+        for (int i = 0; i < adj.size(); i++)
+        {
+                for (int j = 0; j < adj[0].size(); j++)
+                {
+                        if (i == j)
+                                adj[i][j] = 0;
+                }
         }
 
-void mergeSort(vector<int> &nums, int low, int high) {
-	if (low >= high) return;
-	int mid = (high - low) / 2 + low;
-	mergeSort(nums, low, mid);
-	mergeSort(nums, mid + 1, high);
-	outPlaceMerge(nums, low, mid, high);
-}
+        for (int i = 0; i < edges.size(); i++)
+        {
+                adj[edges[i][0]][edges[i][1]] = edges[i][2];
+                adj[edges[i][1]][edges[i][0]] = edges[i][2];
+        }
+
+        for (int k = 0; k < n; k++)
+        {
+                for (int i = 0; i < adj.size(); i++)
+                {
+                        for (int j = 0; j < adj[0].size(); j++)
+                        {
+                                adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+                        }
+                }
+        }
+
+        //To find negative cycle
+        for(int i = 0; i < n; i++)
+        {
+                if(adj[i][i] < 0) return true; // negative cycle exist 
+        }
+
+
+// GCD Greatest Common Divisor
+        int GCD(int a, int b)
+        {
+                return (a == 0) ? abs(b) : GCD(b % a, a);
+        }
+
+//LCM Least Common Multiple
+        int LCM(int a, int b)
+        {
+                return a * b / GCD(a, b);
+        }
+
+
+// Preorder Traversal
+        while(root != nullptr || st.size() != 0)
+        {
+            if(root != nullptr)
+            {
+                st.push(root);
+                ans.push_back(root->val);
+                root = root->left;
+            }
+            else
+            {
+                root = st.top()->right;
+                st.pop();
+            }
+        }
+
+// Postorder Traversal
+        while(root != nullptr || st.size() != 0)
+        {
+            if(root != nullptr)
+            {
+                st.push(root);
+                ans.push_back(root->val);
+                root = root->right;
+            }
+            else
+            {
+                root = st.top()->left;
+                st.pop();
+            }
+        }
+
+        reverse(ans.begin(), ans.end());
+
+// Inorder Travarsal
+        while(root != nullptr || st.empty() != true)
+        {
+            if(root != nullptr)
+            {
+                st.push(root);
+                root = root->left;
+            }
+            else
+            {
+                ans.push_back(st.top()->val);
+                root = st.top()->right;
+                st.pop();
+            }
+        }
+
+
+
