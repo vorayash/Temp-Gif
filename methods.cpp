@@ -4,6 +4,7 @@ lli limit=90000000
 97 - a
 
 The total number of subarrays in an array of size \(N\) is \(N*(N+1)/2\)
+
 1. array
         array<int,6> a={1,2,3};
 
@@ -170,7 +171,7 @@ The total number of subarrays in an array of size \(N\) is \(N*(N+1)/2\)
 
 
 
-6.set
+6.set (Balanced binary tree)
                 |     set             | unordered_set
 ---------------------------------------------------------
 Ordering        | increasing  order   | no ordering
@@ -212,7 +213,8 @@ multiset
         for sorted vector: lower_bound - O(logn) otherwise O(n)
 
         set<in> s;
-        lower_bound(s.begin(),s.end(),ran()) - O(n)
+        lower_bound(s.begin(),s.end(),number) - O(n) - returns pointer to element
+        to get index, minus s.begin()
         s.lower_bound(rand()) - O(logn);
 
 
@@ -223,7 +225,7 @@ multiset
         public:
                 bool operator()(pair<int, int> a, pair<int, int> b)
                 {
-                return a.second < b.second;
+                return a.second < b.second; // Only in priority queue it work opposite
                 }
         };
         sorted by higher to lower on second elem
@@ -235,6 +237,7 @@ multiset
         auto range = Multimap.equal_range(key_to_find) :  it returns a pair of iterators.
         range.first = The first member of the pair points to the beginning of the range
         range.second = second member points just past the end of the range.
+        int count = std::distance(range.first, range.second);
 
 
 11. struct
